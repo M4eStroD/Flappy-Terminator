@@ -13,8 +13,13 @@ public class BirdMover : MonoBehaviour
     private Quaternion _maxRotation;
     private Quaternion _minRotation;
 
+    private IInputService _inputService;
+
     private void Start()
     {
+        _inputService = ServiceLocator.Instance.Resolve<IInputService>();
+        _inputService.JumpButtonClick += OnJumpButtonClick;
+
         _startPosition = transform.position;
         _rigidBody2D = GetComponent<Rigidbody2D>();
 
@@ -26,13 +31,13 @@ public class BirdMover : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            _rigidBody2D.velocity = new Vector2(_speed, _tapForce);
-            transform.rotation = _maxRotation;
-        }
-
         transform.rotation = Quaternion.Lerp(transform.rotation, _minRotation, _rotationSpeed * Time.deltaTime);
+    }
+
+    private void OnJumpButtonClick()
+    {
+        _rigidBody2D.velocity = new Vector2(_speed, _tapForce);
+        transform.rotation = _maxRotation;
     }
 
     public void Reset()

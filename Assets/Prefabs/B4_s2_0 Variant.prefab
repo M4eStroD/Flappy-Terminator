@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6863916207425218679}
-  - component: {fileID: 8955471379416582771}
   - component: {fileID: 5935836634493603150}
   m_Layer: 0
   m_Name: Weapon
@@ -33,20 +32,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4418035602536812139}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
---- !u!114 &8955471379416582771
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2131372299733258371}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 472995ad9d4ebe24490e102d1ef78c9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isEnenmy: 1
-  _intervalAttack: 1
 --- !u!114 &5935836634493603150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,6 +128,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3311788355132455251, guid: 279a233e6d5576f4196c28b6d5bb5a30, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1056243252076434152}
+    - targetCorrespondingSourceObject: {fileID: 3311788355132455251, guid: 279a233e6d5576f4196c28b6d5bb5a30, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6414040565623799622}
   m_SourcePrefab: {fileID: 100100000, guid: 279a233e6d5576f4196c28b6d5bb5a30, type: 3}
 --- !u!4 &4418035602536812139 stripped
 Transform:
@@ -164,6 +152,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3d5bc0333d87e6a49906c860b05f1f54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weapon: {fileID: 5935836634493603150}
+--- !u!114 &6414040565623799622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4418035602536812142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: defce06aea05d784784cab32cc110880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _weapon: {fileID: 5935836634493603150}

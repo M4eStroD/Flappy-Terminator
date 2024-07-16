@@ -1,21 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
 
-public class Enemy : Entity, IInteractable
+public class Enemy : Entity
 {
-    public void Initialize(Transform bulletContainer)
-    {
-        _weapon.Initialize(bulletContainer);
-    }
+    public event Action<Enemy> OnDied;
 
     public override void Die()
     {
-        gameObject.SetActive(false);
-    }
-
-    protected override void Attack(Entity target)
-    {
-        if (target == null) return;
-
-        target.Die();
+        OnDied?.Invoke(this);
     }
 }

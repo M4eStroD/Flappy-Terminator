@@ -4,6 +4,16 @@ public class EndGameScreen : Window
 {
     public event Action RestartButtonClicked;
 
+    private void OnEnable()
+    {
+        ActionButton.onClick.AddListener(OnButtonClick);
+    }
+
+    private void OnDisable()
+    {
+        ActionButton.onClick.RemoveListener(OnButtonClick);
+    }
+
     public override void Close()
     {
         WindowGroup.alpha = 0;
@@ -16,7 +26,7 @@ public class EndGameScreen : Window
         ActionButton.interactable = true;
     }
 
-    protected override void OnButtonClick()
+    private void OnButtonClick()
     {
         RestartButtonClicked?.Invoke();
     }

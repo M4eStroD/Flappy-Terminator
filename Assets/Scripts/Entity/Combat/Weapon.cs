@@ -1,29 +1,21 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(Shooting))]
 public class Weapon : MonoBehaviour
 {
     [SerializeField] private Bullet _bullet;
     [SerializeField] private Transform _container;
-    
-    private Shooting _shooting; 
+
+    private IBulletFactory _bulletFactory;
+    private bool _isReady = true;
+    private float _intervalAttack = 1.5f;
 
     public event Action<Entity> OnHit;
 
-    private void Awake()
+    private void Start()
     {
-        _shooting = GetComponent<Shooting>();
-    }
-
-    private void OnEnable()
-    {
-        _shooting.Fire += SpawnBullet;
-    }
-
-    private void OnDisable()
-    {
-        _shooting.Fire -= SpawnBullet;
+        _bulletFactory = ServiceLocator.Instance.Resolve<IBulletFactory>();
     }
 
     public void Initialize(Transform bulletContainer)
@@ -31,20 +23,25 @@ public class Weapon : MonoBehaviour
         _container = bulletContainer;
     }
 
+    public void Shoot()
+    {
+        if (_isReady == false)
+            return;
+
+        SpawnBullet();
+        StartCoroutine(Reload());
+    }
+
     private void SpawnBullet()
     {
-        Bullet bullet = Instantiate(_bullet, transform.position, Quaternion.identity, _container);
-        bullet.SetDirection(transform.right, transform.rotation);
+        Bullet bullet = _bulletFactory.Create(transform, transform.rotation, _container);
 
         Subscribe(bullet);
     }
 
-    private void RemoveBullet(Bullet bullet, Entity entity)
+    private void RemoveBullet(Bullet bullet)
     {
-        OnHit?.Invoke(entity);
-
         Unsubscribe(bullet);
-        Destroy(bullet.gameObject);
     }
 
     private void Subscribe(Bullet bullet)
@@ -54,6 +51,13 @@ public class Weapon : MonoBehaviour
 
     private void Unsubscribe(Bullet bullet)
     {
-        bullet.OnCrashed -= RemoveBullet;  
+        bullet.OnCrashed -= RemoveBullet;
+    }
+
+    private IEnumerator Reload()
+    {
+        _isReady = false;
+        yield return new WaitForSeconds(_intervalAttack);
+        _isReady = true;
     }
 }

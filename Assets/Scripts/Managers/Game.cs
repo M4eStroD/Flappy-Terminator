@@ -3,7 +3,6 @@ using UnityEngine;
 public class Game : MonoBehaviour
 {
     [SerializeField] private Bird _bird;
-    [SerializeField] private ObjectPool _objectPool;
     [SerializeField] private StartScreen _startScreen;
     [SerializeField] private EndGameScreen _endGameScreen;
     [SerializeField] private EnemySpawner _enemySpawner;
@@ -22,7 +21,7 @@ public class Game : MonoBehaviour
         _bird.GameOver -= OnGameOver;
     }
 
-    private void Awake()
+    private void Start()
     {
         Time.timeScale = 0;
         _startScreen.Open();
@@ -32,7 +31,6 @@ public class Game : MonoBehaviour
     {
         Time.timeScale = 0;
         _endGameScreen.Open();
-        _objectPool.Reset();
         _enemySpawner.Reset();
     }
 

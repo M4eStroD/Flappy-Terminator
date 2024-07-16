@@ -4,6 +4,16 @@ public class StartScreen : Window
 {
     public event Action PlayButtonClicked;
 
+    private void OnEnable()
+    {
+        ActionButton.onClick.AddListener(OnButtonClick);
+    }
+
+    private void OnDisable()
+    {
+        ActionButton.onClick.RemoveListener(OnButtonClick);
+    }
+
     public override void Close()
     {
         WindowGroup.alpha = 0;
@@ -16,7 +26,7 @@ public class StartScreen : Window
         ActionButton.interactable = true;
     }
 
-    protected override void OnButtonClick()
+    private void OnButtonClick()
     {
         PlayButtonClicked?.Invoke();
     }

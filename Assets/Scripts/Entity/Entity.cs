@@ -1,9 +1,29 @@
 using UnityEngine;
 
+[RequireComponent(typeof(BirdCollisionHandler))]
 public abstract class Entity : MonoBehaviour
 {
-    [SerializeField] protected Weapon _weapon;
+    private BirdCollisionHandler _handler;
+
+    protected virtual void Awake()
+    {
+        _handler = GetComponent<BirdCollisionHandler>();
+    }
+
+    private void OnEnable()
+    {
+        _handler.CollisionDetected += ProcessColision;
+    }
+
+    private void OnDisable()
+    {
+        _handler.CollisionDetected -= ProcessColision;
+    }
 
     public abstract void Die();
-    protected abstract void Attack(Entity target);
+
+    protected void ProcessColision()
+    {
+        Die();
+    }
 }

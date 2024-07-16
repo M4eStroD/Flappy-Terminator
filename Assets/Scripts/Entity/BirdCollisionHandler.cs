@@ -1,10 +1,9 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Bird))]
 public class BirdCollisionHandler : MonoBehaviour
 {
-    public event Action<IInteractable> CollisionDetected;
+    public event Action CollisionDetected;
 
     private void OnValidate()
     {
@@ -13,7 +12,6 @@ public class BirdCollisionHandler : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.TryGetComponent(out IInteractable interactable))
-            CollisionDetected?.Invoke(interactable);
+        CollisionDetected?.Invoke();
     }
 }
